@@ -37,3 +37,37 @@ body {
     margin-left: 0;
   margin-right: 0;
 }
+/* Search aside styling*/
+.nav__list {
+    margin:5px;
+}
+.btn-outline-success:hover {
+    /*background-color: var(--clay);
+    border-color:var(--clay);*/
+    border-color:var(--clay);
+    color:var(--clay);
+    background-color:var(--offwhite);
+}
+.btn-outline-success {
+    /*border-color:var(--clay);
+    color:var(--clay);*/
+    color:var(--offwhite);
+    background-color:var(--clay);
+    border-color:var(--clay);
+    
+}
+/* Weather cards styling*/
+.card {
+    border-color:var(--babyblue);
+    
+}
+#current-date {
+    color:var(--clay);
+    font-size:85%;
+}
+.current-forecast__container {
+    height:350px;
+}
+.future-forecast__container {
+    height:300px;
+}

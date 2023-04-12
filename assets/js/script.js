@@ -14,8 +14,24 @@ let openWeatherAPI = '';
 let lat= '';
 let lon= '';
 let forecastAPI = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat +'&lon=' + lon + '&appid=b55644b1672c2e922502f7ab98105758';
+searchButton.on('click', startSearch) 
 //save user submission, use geocoding api
+let searchHistory = [];
+function startSearch(event){
+    event.preventDefault();
+    console.log('search clicked');
+    
+    let searchedCity= searchedInput.val();
+    searchHistory.push(searchedCity);
 
+    console.log(searchedCity);
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+    console.log('sh: ' + searchHistory);
+    //function to propogate search history ((will not stay here))
+    showHistory();
+    //function to search with city with geo
+   //searchCity();
+}
 //function to retrieve, create elements, and append search history to page
 function showHistory () {
     let retrievedHistory = JSON.parse(localStorage.getItem('searchHistory'));
@@ -38,29 +54,7 @@ function showHistory () {
     });*/
 }
 
-let searchHistory = [];
-searchButton.on('click', function(event){
-    event.preventDefault();
-    console.log('search clicked');
-    
-    let searchedCity= searchedInput.val();
-    searchHistory.push(searchedCity);
-
-    console.log(searchedCity);
-    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-    console.log('sh: ' + searchHistory);
-    //function to propogate search history ((will not stay here))
-    showHistory();
-    //function to search with city with geo
-   
-})
-
 //function to search geo
-
-
-//let geoURL = 'http://api.openweathermap.org/geo/1.0/direct?q=' +searchedCity +'&limit=5&appid=b55644b1672c2e922502f7ab98105758';
-
-
 
 
 

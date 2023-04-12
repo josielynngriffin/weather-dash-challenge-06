@@ -56,6 +56,9 @@ body {
     border-color:var(--clay);
     
 }
+#search-history__button {
+    width:65%;
+}
 /* Weather cards styling*/
 .card {
     border-color:var(--babyblue);

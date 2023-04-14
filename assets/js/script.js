@@ -101,8 +101,21 @@ function getWeather(data) {
             })
             .then(function (data) {
                 console.log(data)
-                
+                getCurrentWeather(data);
             })
+};
+
+function getCurrentWeather(data) {
+    let currentWeatherCity = $('#current-forecast__city');
+    console.log(currentWeatherCity);
+    //currentWeatherCity.textContent = 'data.city.name';
+    //$(currentWeatherCity).text(data.city.name);
+    //todayContainer.insertAdjacentHtml('afterbegin', data.city.name);
+    todayContainer.insertAdjacentHTML= "afterbegin", data.city.name;
+    console.log(currentWeatherCity);
+    
+    //let todayContainer = $('#current-date');
+    //todayContainer.text(currentDate.format('MMM D, YYYY'));
 };
 //SCRAPPED CODE --- DATES DATA IN API
 

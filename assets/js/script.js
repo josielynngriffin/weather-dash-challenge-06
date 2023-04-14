@@ -11,9 +11,8 @@ let searchButton = $('#search__button');
 let searchHistoryCont = $('#search-history__cont');
 //let searchHistoryButton = $('#search-history__button');
 let openWeatherAPI = '';
-let lat= '';
-let lon= '';
-let forecastAPI = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat +'&lon=' + lon + '&appid=b55644b1672c2e922502f7ab98105758';
+
+
 searchButton.on('click', startSearch) 
 //save user submission, use geocoding api
 let searchHistory = [];
@@ -30,7 +29,7 @@ function startSearch(event){
     //function to propogate search history ((will not stay here))
     showHistory();
     //function to search with city with geo
-   //searchCity();
+    searchCity(searchedCity);
 }
 //function to retrieve, create elements, and append search history to page
 function showHistory () {
@@ -38,7 +37,6 @@ function showHistory () {
     console.log('retrieved: ' + retrievedHistory);
     for (let i=0; i < retrievedHistory.length; i++) {
         let generatedSearchButton = document.createElement('button');
-        let searchClasses = ['btn', '']
         $(generatedSearchButton).addClass('btn').addClass('btn-outline-success').addClass('m-2');
         $(generatedSearchButton).attr('id', 'search-history__button');
         $(generatedSearchButton).text(retrievedHistory[i]);
@@ -57,8 +55,53 @@ function showHistory () {
 //function to search geo
 
 
+function searchCity(searchedCity){
+    console.log('searched city :' + searchedCity);
+    let geoURL = 'http://api.openweathermap.org/geo/1.0/direct?q=' +searchedCity +'&limit=5&appid=b55644b1672c2e922502f7ab98105758';
+    console.log(geoURL);
+    fetch(geoURL)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function(data) {
+            console.log('GEOAPI: ' + data);
+            console.log(data);
+           getWeather(data);
+        })
+};
 
+//function to search weather api
 
+//proxy to fix cors issue
+/*const express = require('express');
+const request = require('request');
+
+const app = express();
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});*/
+function getWeather(data) {
+    let lat= data[0].lat;
+    let lon= data[0].lon;
+    console.log(lat);
+    console.log(lon);
+    //let forecastURL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat +'&lon=' + lon + '&appid=b55644b1672c2e922502f7ab98105758';
+    //let forecastURL= 'api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+lon+'&units=imperial&appid=b55644b1672c2e922502f7ab98105758';
+    let forecastURL = `https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/forecast?lat=`+lat+`&lon=`+lon+ `&units=metric&appid=b55644b1672c2e922502f7ab98105758`;
+    console.log(forecastURL);
+    fetch({forecastURL, mode:"no-cors"})
+            .then(function (response) {
+                if(response.ok) {
+                    return response.json()
+                } else {alert('Error' + response.status)}
+                
+            })
+            .then(function (data) {
+                console.log(data)
+            })
+};
 //SCRAPPED CODE --- DATES DATA IN API
 
 /*$(function forecastDates() {

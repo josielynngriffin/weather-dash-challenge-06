@@ -57,7 +57,7 @@ function showHistory () {
 
 function searchCity(searchedCity){
     console.log('searched city :' + searchedCity);
-    let geoURL = 'http://api.openweathermap.org/geo/1.0/direct?q=' +searchedCity +'&limit=5&appid=b55644b1672c2e922502f7ab98105758';
+    let geoURL = 'https://api.openweathermap.org/geo/1.0/direct?q=' +searchedCity +'&limit=5&appid=b55644b1672c2e922502f7ab98105758';
     console.log(geoURL);
     fetch(geoURL)
         .then(function (response) {
@@ -89,17 +89,19 @@ function getWeather(data) {
     console.log(lon);
     //let forecastURL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat +'&lon=' + lon + '&appid=b55644b1672c2e922502f7ab98105758';
     //let forecastURL= 'api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+lon+'&units=imperial&appid=b55644b1672c2e922502f7ab98105758';
-    let forecastURL = `https://cors-anywhere.herokuapp.com/https://api.openweathermap.org/data/2.5/forecast?lat=`+lat+`&lon=`+lon+ `&units=metric&appid=b55644b1672c2e922502f7ab98105758`;
+    let forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=`+lat+`&lon=`+lon+ `&units=metric&appid=b55644b1672c2e922502f7ab98105758`;
     console.log(forecastURL);
-    fetch({forecastURL, mode:"no-cors"})
+    fetch(forecastURL)
             .then(function (response) {
-                if(response.ok) {
+                /*if(response.ok) {
                     return response.json()
-                } else {alert('Error' + response.status)}
+                } else {alert('Error' + response.status)}*/
+                return response.json();
                 
             })
             .then(function (data) {
                 console.log(data)
+                
             })
 };
 //SCRAPPED CODE --- DATES DATA IN API

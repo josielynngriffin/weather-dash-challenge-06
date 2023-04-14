@@ -20,7 +20,10 @@ h2 {
     font-size:250%;
 }
 h3 {
-    font-size:200%;
+    font-size:220%;
+}
+h4 {
+    font-size:190%;
 }
 body {
     background-color: var(--offwhite);
@@ -66,7 +69,6 @@ body {
 }
 #current-date {
     color:var(--clay);
-    font-size:85%;
 }
 .current-forecast__container {
     height:350px;

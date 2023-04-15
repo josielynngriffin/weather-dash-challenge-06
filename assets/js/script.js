@@ -8,7 +8,7 @@ todayContainer.text(currentDate.format('MMM D, YYYY'));
 let forecastDateCont = $('#forecast-date');
 let searchedInput = $('#searchedCity__input');
 let searchButton = $('#search__button');
-let searchHistoryCont = $('#search-history__cont');
+let searchHistoryCont = document.getElementById('search-history__cont');
 //let searchHistoryButton = $('#search-history__button');
 let openWeatherAPI = '';
 
@@ -21,18 +21,25 @@ function startSearch(event){
     console.log('search clicked');
     
     let searchedCity= searchedInput.val();
-    searchHistory.push(searchedCity);
+    if(searchedCity && !searchHistory.includes(searchedCity)) {
+        searchHistory.push(searchedCity);
+         localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+        console.log('sh: ' + searchHistory);
+        showHistory();
+    }
+    
 
     console.log(searchedCity);
-    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-    console.log('sh: ' + searchHistory);
+   
+    //console.log('sh: ' + searchHistory);
     //function to propogate search history ((will not stay here))
-    showHistory();
+    
     //function to search with city with geo
     searchCity(searchedCity);
 }
 //function to retrieve, create elements, and append search history to page
 function showHistory () {
+    searchHistoryCont.innerHTML= '';
     let retrievedHistory = JSON.parse(localStorage.getItem('searchHistory'));
     console.log('retrieved: ' + retrievedHistory);
     for (let i=0; i < retrievedHistory.length; i++) {
@@ -89,7 +96,7 @@ function getWeather(data) {
     console.log(lon);
     //let forecastURL = 'https://api.openweathermap.org/data/2.5/forecast?lat=' + lat +'&lon=' + lon + '&appid=b55644b1672c2e922502f7ab98105758';
     //let forecastURL= 'api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+lon+'&units=imperial&appid=b55644b1672c2e922502f7ab98105758';
-    let forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=`+lat+`&lon=`+lon+ `&units=metric&appid=b55644b1672c2e922502f7ab98105758`;
+    let forecastURL = `https://api.openweathermap.org/data/2.5/forecast?lat=`+lat+`&lon=`+lon+ `&units=imperial&appid=b55644b1672c2e922502f7ab98105758`;
     console.log(forecastURL);
     fetch(forecastURL)
             .then(function (response) {
@@ -102,20 +109,42 @@ function getWeather(data) {
             .then(function (data) {
                 console.log(data)
                 getCurrentWeather(data);
+                getForecastWeather(data);
             })
 };
 
 function getCurrentWeather(data) {
-    let currentWeatherCity = $('#current-forecast__city');
+    //let currentWeatherCity = $('#current-forecast__city');
+    let currentWeatherCity = document.getElementById("current-forecast__city");
+    let currentWeatherTemp = document.getElementById("current-forecast__temp");
+    let currentWeatherWind = document.getElementById("current-forecast__wind");
+    let currentWeatherHumid = document.getElementById("current-forecast__humid");
+    currentWeatherCity.innerHTML = '';
+    //let currentWeatherIcon = document.getElementById('current-forecast__icon');
+    let currentWeatherIconCont = document.getElementById('current-forecast__icon');
+    let currentWeatherIcon = document.createElement('img');
+    let currenticon= '';
     console.log(currentWeatherCity);
-    //currentWeatherCity.textContent = 'data.city.name';
+    currentWeatherCity.textContent = data.city.name;
+    
+    //currentWeatherTemop.textContent = 
+    currentWeatherIcon.setAttribute('src', 'https://openweathermap.org/img/wn/'+data.list[0].weather[0].icon+'.png');
+    $(currentWeatherIcon).addClass('card-img-top');
+    currentWeatherIconCont.append(currentWeatherIcon);
+    currentWeatherTemp.textContent = 'Temp: ' + data.list[0].main.temp + ' °F';
+    currentWeatherHumid.textContent = 'Humidity: ' + data.list[0].main.humidity + ' %';
+    currentWeatherWind.textContent = 'Wind Speed: ' + data.list[0].wind.speed + ' MPH';
+    //currentWeatherCity.textContent= data.city.name;
     //$(currentWeatherCity).text(data.city.name);
-    //todayContainer.insertAdjacentHtml('afterbegin', data.city.name);
-    todayContainer.insertAdjacentHTML= "afterbegin", data.city.name;
+    //todayContainer.insertAdjacentHtml= 'afterbegin', data.city.name;
+    //todayContainer.insertAdjacentHTML()= "afterbegin", data.cityname;
     console.log(currentWeatherCity);
     
     //let todayContainer = $('#current-date');
     //todayContainer.text(currentDate.format('MMM D, YYYY'));
+};
+
+function getForecastWeather(data) {
 };
 //SCRAPPED CODE --- DATES DATA IN API
 

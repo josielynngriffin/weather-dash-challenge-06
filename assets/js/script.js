@@ -114,6 +114,7 @@ function getWeather(data) {
 };
 
 function getCurrentWeather(data) {
+   
     //let currentWeatherCity = $('#current-forecast__city');
     let currentWeatherCity = document.getElementById("current-forecast__city");
     let currentWeatherTemp = document.getElementById("current-forecast__temp");
@@ -122,6 +123,7 @@ function getCurrentWeather(data) {
     currentWeatherCity.innerHTML = '';
     //let currentWeatherIcon = document.getElementById('current-forecast__icon');
     let currentWeatherIconCont = document.getElementById('current-forecast__icon');
+    currentWeatherIconCont.innerHTML = '';
     let currentWeatherIcon = document.createElement('img');
     let currenticon= '';
     console.log(currentWeatherCity);
@@ -145,7 +147,62 @@ function getCurrentWeather(data) {
 };
 
 function getForecastWeather(data) {
+    let forecastCards = [
+        {
+            forecastnum: 1,
+            listnum:6,
+        }, 
+        {
+            forecastnum:2,
+            listnum:14,
+        },
+        {
+            forecastnum:3,
+            listnum:22,
+        },
+        {
+            forecastnum:4,
+            listnum:30,
+        },
+        {
+            forecastnum:5,
+            listnum:38,
+        },
+    ]
+    let finalForecast = forecastCards.length;
+    let currentForecastI = 0
+    let currentForecastCard = forecastCards[currentForecastI];
+    
+    for (currentForecastI; currentForecastI < forecastCards.length; currentForecastI++) {
+        let currentForecastNum = forecastCards[currentForecastI].forecastnum;
+        let currentForecastListNum = forecastCards[currentForecastI].listnum;
+        let currentForecastDateId= 'forecast-' + currentForecastNum + '__date';
+        console.log(currentForecastDateId);
+        let forecastWeatherTemp= document.getElementById('forecast-'+ currentForecastNum+'__temp');
+        let forecastWeatherWind = document.getElementById('forecast-'+ currentForecastNum+'__wind');
+        let forecastWeatherHumid = document.getElementById('forecast-' + currentForecastNum+'__humid');
+        forecastWeatherTemp.textContent = 'Temp: ' + data.list[currentForecastListNum].main.temp + ' °F';
+        forecastWeatherHumid.textContent = 'Humidity: ' + data.list[currentForecastListNum].main.humidity + ' %';
+        forecastWeatherWind.textContent = 'Wind Speed: ' + data.list[currentForecastListNum].wind.speed + ' MPH';
+        let forecastDate = document.getElementById('forecast-'+currentForecastNum+'__date');
+        let forecastDateVal = data.list[currentForecastListNum].dt_txt;
+        let forecastDateFix= dayjs(forecastDateVal).format('MM/DD/YYYY');
+        forecastDate.textContent= forecastDateFix;
+        let forecastWeatherIconCont = document.getElementById('forecast-'+currentForecastNum+'__icon');
+        forecastWeatherIconCont.innerHTML = '';
+        let forecastWeatherIcon = document.createElement('img');
+        forecastWeatherIcon.setAttribute('src', 'https://openweathermap.org/img/wn/'+data.list[currentForecastListNum].weather[0].icon+'.png');
+        $(forecastWeatherIcon).addClass('forecast-img');
+        forecastWeatherIconCont.append(forecastWeatherIcon);
+        //forecastDate.textContent = data.list[currentForecastListNum].dt_txt;
+
+    };
+    
+    //forecastCards.forEach()
+
+    
 };
+showHistory();
 //SCRAPPED CODE --- DATES DATA IN API
 
 /*$(function forecastDates() {

@@ -203,6 +203,15 @@ function getForecastWeather(data) {
     
 };
 showHistory();
+
+$(searchHistoryCont).on('click', 'button', function(event){
+    event.preventDefault();
+    console.log('history click')
+    let historyCity= event.target.textContent;
+    searchCity(historyCity);
+});
+
+
 //SCRAPPED CODE --- DATES DATA IN API
 
 /*$(function forecastDates() {

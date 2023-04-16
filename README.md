@@ -11,7 +11,7 @@ To accomplish this I used HTML, CSS, JavaScript, Bootstrap, dayJS, the 5 Day Wea
 ## Usage
 To use this weather dashboard, type a city of your choosing into the search bar and hit the search button. Weather information for today and the next five days will populate into the cards to the right (or below if you are on mobile). Your search history will also log beneath the search bar, and each entry can be clicked to search for the city again. When you refresh the page your search will persist, although it will clear once you search for a new entry.
 ## Screenshots
-![A screenshot of the weather application in action](./assets/img/weather-dashboard-screenshot.png)
+![A screenshot of the weather application in action](./assets/img/weather-dash-screenshot.png)
 ## Credits
 ## Link to Live, Deployed Page
 [Weather Dashboard Challenge-06](https://josielynngriffin.github.io/weather-dash-challenge-06/index.html)
